@@ -6,4 +6,4 @@ app.use(express.json());
 
 
 
-app.listen(port, () => {console.log(`launching the serveur on port $(port)`)})
+app.listen(port, () => {console.log(`launching the serveur on port ${port}`)})
