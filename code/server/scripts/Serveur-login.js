@@ -3,18 +3,14 @@ const cors = require("cors");
 const app = express();
 const port = 8000;
 
-const data = {
-    "name":"Louis",
-    "password":1234,
-}
 
 app.use(cors());
 app.use(express.json());
 
+app.post("/login",(req,res)=>{
+    console.log("login request", req.body);
 
-app.get("/data", (req,res) => {
-    console.log("serveur is sending data");
-    res.json(data);
+    res.json({message:"your infos", ...req.body});
     res.end();
 })
 
