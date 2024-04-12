@@ -14,7 +14,9 @@ function Login() {
         e.preventDefault();
 
         axios.post(`${url}/login`, usrInfos)
-        .then(response =>{console.log("success: ", response.data)})
+        .then(response =>{
+            console.log("success: ", response.data);
+        })
         .catch(err =>{console.err("error", err)});
     }
 
@@ -26,6 +28,11 @@ function Login() {
         ))
     });
 
+    const dataRetrieve = (e=>{
+        axios.get(`${url}/data`)
+        .then(response => {console.log("success datas:\n",response.data)})
+    })
+
     return(
         <div>
             <h1>Login</h1>
@@ -34,7 +41,7 @@ function Login() {
                 <input id="usr" name="username" onChange={handleChange}/>
 
                 <label htmlFor="mdp">Mot de passse</label>
-                <input id="mdp" name="password" onChange={handleChange}/>
+                <input id="mdp" name="password" type="password" onChange={handleChange}/>
 
                 <input type="submit"/>
                 <Link to="register">
@@ -43,7 +50,10 @@ function Login() {
                 
             </form>
 
-            <p>my infos: <br/>{JSON.stringify(usrInfos)}</p>
+            <p></p>
+            {/* <button onClick={dataRetrieve}>yoo</button> */}
+
+            {/* <p>my infos: <br/>{JSON.stringify(usrInfos)}</p> */}
         </div>
     )
 }
