@@ -3,24 +3,36 @@ import axios from 'axios';
 import {useState} from "react"
 
 function Login() {
+    const [isConnected, setIsConnected] = useState(false);
+    const [error,setError] = useState({
+        "value":false,
+        "message":"coucou"
+    })
     const [usrInfos, setUsrInfos] = useState({
         username:"",
         password:""
-    })
+    });
 
-    const url = "http://localhost:8000"
+    const url = "http://localhost:8000";
 
     const handleSubmit = (e) => {
         e.preventDefault();
 
         axios.post(`${url}/login`, usrInfos)
         .then(response =>{
-            console.log("success: ", response.data);
+            console.log("success: ", response.data.value);
+            setIsConnected(response.data.value);
         })
-        .catch(err =>{console.err("error", err)});
-    }
+        .catch(err =>{
+            console.error("error", err);
 
+            if(err.response){
+                setError({"value":true,"message":err.response.data});
+            }
+        });
+    };
 
+    
     const handleChange = (e =>{
         const {name, value} = e.target;
         setUsrInfos(prev => (
@@ -28,34 +40,37 @@ function Login() {
         ))
     });
 
-    const dataRetrieve = (e=>{
-        axios.get(`${url}/data`)
-        .then(response => {console.log("success datas:\n",response.data)})
-    })
 
-    return(
-        <div>
-            <h1>Login</h1>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="usr">Nom d'utilisateur</label>
-                <input id="usr" name="username" onChange={handleChange}/>
+    // Once connected creat forum component
+    if(isConnected){
+        return <p>pouet</p>
+    }
 
-                <label htmlFor="mdp">Mot de passse</label>
-                <input id="mdp" name="password" type="password" onChange={handleChange}/>
+    // Connection code
+    else{
+        return(
+            <div>
+                <h1>Login</h1>
+                <form onSubmit={handleSubmit}>
+                    <label htmlFor="usr">Nom d'utilisateur</label>
+                    <input id="usr" name="username" onChange={handleChange}/>
 
-                <input type="submit"/>
-                <Link to="register">
-                    <input type="button" value="Inscription"/> 
-                </Link>
-                
-            </form>
+                    <label htmlFor="mdp">Mot de passse</label>
+                    <input id="mdp" name="password" type="password" onChange={handleChange}/>
 
-            <p></p>
-            {/* <button onClick={dataRetrieve}>yoo</button> */}
+                    <input type="submit"/>
+                    <Link to="register">
+                        <input type="button" value="Inscription"/> 
+                    </Link>
+                    
+                </form>
 
-            {/* <p>my infos: <br/>{JSON.stringify(usrInfos)}</p> */}
-        </div>
-    )
+                {/* if invalid fields print message */}
+                {error.value? <p>Error  : {error.message}</p> :<p></p>}
+
+            </div>
+        )
+    }
 }
 
 export default Login
