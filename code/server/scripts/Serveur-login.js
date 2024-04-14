@@ -47,5 +47,30 @@ app.post("/login",async(req,res)=>{
     }
 })
 
+app.post("/signUp", async(req,res)=>{
+    try{
+        await client.connect();
+
+        const usersBDD = client.db("ForumBDD").collection("users");
+        const bddRes = await usersBDD.insertOne(req.body);
+
+        // if(bddRes.insertedCount !=1){
+        //     throw new Error("Insertion failled ");
+        // }
+
+        res.json({"message":"ok","result":"ok"});
+        res.end();
+    }
+
+    catch(err){
+        res.status(500);
+        res.send("error {err.message}");
+    }
+
+    finally{
+        client.close();
+    }
+})
+
 
 app.listen(port, () => {console.log(`launching the serveur on port ${port}`)})

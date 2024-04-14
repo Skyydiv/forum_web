@@ -1,21 +1,62 @@
 import { Link } from "react-router-dom";
+import {useState} from "react";
+import axios from "axios";
 
 function Register(){
+    // const server = axios.create("http://localhost:8000");
+    const url = "http://localhost:8000";
+
+    const [infos,setInfos] = useState({
+        "username":"",
+        "password":"",
+    });
+
+    const [confirmP,setConfirmP] = useState(true);
+
+    const handleChange = (e => {
+        setInfos((prev) => (
+            {...prev, [e.target.name]: e.target.value}
+        ));
+    })
+
+    const handleSubmit = ( e =>{
+        e.preventDefault(); 
+        if(infos.username!="" && infos.password!="" && confirmP){
+            axios.post(`${url}/signUp`,infos)
+            .then((response) =>{
+                console.log("succes subscription");
+            })
+            .catch(err =>{
+                console.err("error inscription", err);
+            })
+        }
+        
+    });
+
+    const testP = (e => {
+        setConfirmP(e.target.value == infos.password);
+    })
+
     return(
         <>
             <h1>Inscription</h1>
-            <form>
-                <label HTMLfor="usr">Username</label>
-                <input id="user"/>
+            <form onSubmit={handleSubmit}>
+                <label htmlFor="usr">Username</label>
+                <input id="user" name="username" onChange={handleChange}/>
 
-                <labe HTMLfor="mdp">Mot de passe</labe>
-                <input id="mdp"/>
+                <label htmlFor="mdp">Mot de passe</label>
+                <input id="mdp" name="password" type="password" onChange={handleChange}/>
 
-                <input type="submit"/>
+                <label htmlFor="confirm">Confirmer mot de passe</label>
+                <input id="confirm" name="confirm" type="password" onChange={testP}/>
+
+                <input type="submit" value="S'inscrire"/>
                 <Link to="/">
                     <input type="button" value="Page de connection"/>
                 </Link>
             </form>
+            
+            {confirmP? <></> : <p>Password don't match</p>}
         </>
     )
 }
