@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import axios from 'axios';
 import {useState} from "react"
+import Forum from "./Forum"
 
 function Login() {
     const [isConnected, setIsConnected] = useState(false);
@@ -50,6 +51,7 @@ function Login() {
     else{
         return(
             <div>
+                <Forum/>
                 <h1>Login</h1>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="usr">Nom d'utilisateur</label>

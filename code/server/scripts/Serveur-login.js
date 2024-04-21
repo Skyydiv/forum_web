@@ -68,7 +68,31 @@ app.post("/signUp", async(req,res)=>{
     }
 
     finally{
-        client.close();
+        await client.close();
+    }
+})
+
+
+app.get("/Forum", async(req,res) => {
+    
+    try{
+        await client.connect;
+        const topics = client.db("ForumBDD").collection("Topics");
+
+        const projection = { "subject": 1, "_id": 0 };
+        const data = await topics.find().project(projection).toArray();
+
+
+        console.log(data);
+        res.json(data);
+    }
+    catch(e){
+        console.error(e);
+        res.status(500);
+        res.send("Error");
+    }
+    finally{
+        await client.close();
     }
 })
 
