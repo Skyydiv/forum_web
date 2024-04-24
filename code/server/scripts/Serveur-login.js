@@ -76,12 +76,16 @@ app.post("/signUp", async(req,res)=>{
 app.get("/Forum", async(req,res) => {
     
     try{
-        await client.connect;
+        console.log("toc toc")
+        await client.connect();
+        console.log("test1")
         const topics = client.db("ForumBDD").collection("Topics");
 
-        const projection = { "subject": 1, "_id": 0 };
+        console.log("test2")
+        const projection = { "subject": 1, "_id": 1 };
         const data = await topics.find().project(projection).toArray();
 
+        console.log("test3")
 
         console.log(data);
         res.json(data);

@@ -44,14 +44,15 @@ function Login() {
 
     // Once connected creat forum component
     if(isConnected){
-        return <p>pouet</p>
+        return (<Forum/>)
+        // return <p>ok</p>
     }
 
     // Connection code
     else{
         return(
             <div>
-                <Forum/>
+                {/* <Forum/> */}
                 <h1>Login</h1>
                 <form onSubmit={handleSubmit}>
                     <label htmlFor="usr">Nom d'utilisateur</label>
