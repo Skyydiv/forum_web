@@ -2,6 +2,7 @@ import {useState} from "react";
 import axios from "axios";
 import {useEffect} from "react";
 import Topic from "./Topic";
+import NavBarre from "./NavBarre"
 
 function Forum () {
     const [subjects, setSubjects] = useState([]);
@@ -38,6 +39,7 @@ function Forum () {
     else{
         return(
             <div>
+                {/* <NavBarre/> */}
                 <ul>
                     {subjects.map(sub => (
                         <a href='' onClick={(e) =>{e.preventDefault(); handleSelected(sub._id)}}>

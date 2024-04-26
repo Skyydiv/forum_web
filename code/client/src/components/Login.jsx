@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import axios from 'axios';
 import {useState} from "react"
 import Forum from "./Forum"
 
-function Login() {
+function Login({changePage}) {
     const [isConnected, setIsConnected] = useState(false);
     const [error,setError] = useState({
         "value":false,
@@ -62,9 +62,9 @@ function Login() {
                     <input id="mdp" name="password" type="password" onChange={handleChange}/>
 
                     <input type="submit"/>
-                    <Link to="register">
-                        <input type="button" value="Inscription"/> 
-                    </Link>
+
+                    <input type="button" value="Inscription" onClick={() => changePage({"num":1})}/> 
+                    
                     
                 </form>
 

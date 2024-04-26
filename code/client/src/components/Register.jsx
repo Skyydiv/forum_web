@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
 
-function Register(){
+function Register({changePage}){
     // const server = axios.create("http://localhost:8000");
     const url = "http://localhost:8000";
 
@@ -51,9 +51,9 @@ function Register(){
                 <input id="confirm" name="confirm" type="password" onChange={testP}/>
 
                 <input type="submit" value="S'inscrire"/>
-                <Link to="/">
-                    <input type="button" value="Page de connection"/>
-                </Link>
+
+                <input type="button" value="Page de connection" onClick={() => changePage({"num":0})}/>
+                
             </form>
             
             {confirmP? <></> : <p>Password don't match</p>}
