@@ -1,6 +1,8 @@
 const express = require("express");
 const cors = require("cors");
+ 
 const {MongoClient} = require("mongodb")
+const ObjectId = require('mongodb').ObjectId; 
 
 const app = express();
 const port = 8000;
@@ -76,16 +78,11 @@ app.post("/signUp", async(req,res)=>{
 app.get("/Forum", async(req,res) => {
     
     try{
-        console.log("toc toc")
         await client.connect();
-        console.log("test1")
         const topics = client.db("ForumBDD").collection("Topics");
 
-        console.log("test2")
         const projection = { "subject": 1, "_id": 1 };
         const data = await topics.find().project(projection).toArray();
-
-        console.log("test3")
 
         console.log(data);
         res.json(data);
@@ -100,5 +97,29 @@ app.get("/Forum", async(req,res) => {
     }
 })
 
+app.post("/Topic", async(req,res) => {
+    
+    try{
+        console.log("debut")
+        await client.connect();
+        const topics = client.db("ForumBDD").collection("Topics");
+
+        console.log(req.body,req.body.id);
+        const id = new ObjectId(req.body.id);
+        const projection = {"_id": 0};
+        const data = await topics.find({"_id": id}).project(projection).next(); // {"text": "blaaaaaaaaaa"} :req.body.id
+        console.log("data",data);
+        console.log("fin");
+        res.json(data);
+    }
+    catch(e){
+        console.error(e);
+        res.status(500);
+        res.send("Error");
+    }
+    finally{
+        await client.close();
+    }
+})
 
 app.listen(port, () => {console.log(`launching the serveur on port ${port}`)})
