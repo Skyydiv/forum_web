@@ -34,7 +34,7 @@ app.post("/login",async(req,res)=>{
         }
 
         res.status(200);
-        res.json({"value":true,"message":"succes"});
+        res.json({"value":true,"user":dataUser});
         res.end();
     }
 

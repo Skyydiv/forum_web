@@ -1,12 +1,10 @@
 import {useState} from "react";
 import axios from "axios";
 import {useEffect} from "react";
-import Topic from "./Topic";
 import NavBarre from "./NavBarre"
 
-function Forum () {
+function Forum ({changePage}) {
     const [subjects, setSubjects] = useState([]);
-    const [selected, setSelected] = useState();
 
     const url = "http://localhost:8000";
 
@@ -14,7 +12,7 @@ function Forum () {
         axios.get(`${url}/forum`)
 
         .then(res => {
-            console.log("cool\n", res.data);
+            // console.log("cool\n", res.data);
             setSubjects(res.data)
         })
 
@@ -28,28 +26,27 @@ function Forum () {
     },[]);
 
     const handleSelected = (arg) => {
-        console.log(arg);
-        setSelected(arg);
+        // console.log(arg);
+        changePage({
+            "num": 3,
+            "topic": {"id":arg}
+        })
     }
-    
-    if (selected){
-        return <Topic id={selected}/>;
-    }
+ 
 
-    else{
-        return(
-            <div>
-                {/* <NavBarre/> */}
-                <ul>
-                    {subjects.map(sub => (
-                        <a href='' onClick={(e) =>{e.preventDefault(); handleSelected(sub._id)}}>
-                            <li key ={sub.id}>{sub.subject}</li>
-                        </a>
-                    ))}
-                </ul>
-            </div>
-        );
-    }
+    return(
+        <div>
+            {/* <NavBarre/> */}
+            <ul>
+                {subjects.map(sub => (
+                    <a href='' onClick={(e) =>{e.preventDefault();  handleSelected(sub._id)}}>
+                        <li key ={sub.id}>{sub.subject}</li>
+                    </a>
+                ))}
+            </ul>
+        </div>
+    );
+
     
 
     

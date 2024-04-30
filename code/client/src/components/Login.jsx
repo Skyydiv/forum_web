@@ -21,8 +21,11 @@ function Login({changePage}) {
 
         axios.post(`${url}/login`, usrInfos)
         .then(response =>{
-            console.log("success: ", response.data.value);
-            setIsConnected(response.data.value);
+            // console.log("success: ", response.data);
+            changePage({
+                "num":2,
+                "user":response.data.user
+            })
         })
         .catch(err =>{
             console.error("error", err);
@@ -45,7 +48,6 @@ function Login({changePage}) {
     // Once connected creat forum component
     if(isConnected){
         return (<Forum/>)
-        // return <p>ok</p>
     }
 
     // Connection code

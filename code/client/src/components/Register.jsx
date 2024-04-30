@@ -1,9 +1,7 @@
-// import { Link } from "react-router-dom";
 import {useState} from "react";
 import axios from "axios";
 
 function Register({changePage}){
-    // const server = axios.create("http://localhost:8000");
     const url = "http://localhost:8000";
 
     const [infos,setInfos] = useState({
