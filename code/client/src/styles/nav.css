@@ -3,6 +3,7 @@
     display:flex;
     justify-content:space-between;
     flex-direction: row;
+    margin:0 20%;
 }
 
 .nav ul{
