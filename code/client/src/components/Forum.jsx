@@ -3,7 +3,7 @@ import axios from "axios";
 import {useEffect} from "react";
 import NavBarre from "./NavBarre"
 
-function Forum ({changePage}) {
+function Forum ({curr,changePage}) {
     const [subjects, setSubjects] = useState([]);
 
     const url = "http://localhost:8000";
@@ -27,7 +27,7 @@ function Forum ({changePage}) {
 
     const handleSelected = (arg) => {
         // console.log(arg);
-        changePage({
+        changePage({...curr,
             "num": 3,
             "topic": {"id":arg}
         })

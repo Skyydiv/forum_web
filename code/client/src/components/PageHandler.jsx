@@ -3,6 +3,7 @@ import Register from "./Register";
 import Login from "./Login";
 import Forum from "./Forum"
 import Topic from "./Topic"
+import NavBarre from "./NavBarre";
 
 function PageHandler(){
     const [curr, setCurr] = useState({
@@ -17,13 +18,19 @@ function PageHandler(){
             return <Register changePage={setCurr}/>
 
         case 2:
-            return <Forum changePage={setCurr}/>
+            return (
+                <div>
+                    <NavBarre curr={curr} changePage={setCurr}/>
+                    <Forum curr={curr} changePage={setCurr}/>
+                </div>
+            )
         
         case 3:
             return(
                 <div>
+                    <NavBarre curr={curr} changePage={setCurr}/>
                     <Topic id={curr.topic}/>
-                    <Topic id={curr.topic}/>
+                    <h2>Composant liste message</h2>
                 </div>
             )
 
