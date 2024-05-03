@@ -36,6 +36,12 @@ function Forum ({curr,changePage}) {
 
     return(
         <div>
+            <input type="button" value="New topic" onClick={() => (
+                changePage(prev =>(
+                    {...prev,"num":5}
+                ))
+            )}/>
+
             <ul>
                 {subjects.map(sub => (
                     <a href='' onClick={(e) =>{e.preventDefault();  handleSelected(sub._id)}}>

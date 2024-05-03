@@ -1,7 +1,7 @@
 const express = require("express");
 const cors = require("cors");
  
-const {MongoClient} = require("mongodb")
+const {MongoClient, Collection} = require("mongodb")
 const ObjectId = require('mongodb').ObjectId; 
 
 const app = express();
@@ -120,6 +120,29 @@ app.post("/Topic", async(req,res) => {
     finally{
         await client2.close();
     }
+})
+
+//
+
+app.post("/CreateTopic", async(req,res) =>{
+  try{
+    // console.log("recive");
+    await client.connect();
+    const topics = client.db("ForumBDD").collection("Topics");
+    await topics.insertOne(req.body);
+
+    res.send("ok");
+  }
+
+  catch(err){
+    console.error(err);
+    res.status(500).send();
+  }
+
+  finally{
+    await client.close();
+  }
+  
 })
 
 
