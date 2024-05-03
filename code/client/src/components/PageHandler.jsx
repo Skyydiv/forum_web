@@ -4,6 +4,9 @@ import Login from "./Login";
 import Forum from "./Forum"
 import Topic from "./Topic"
 import NavBarre from "./NavBarre";
+import Message from "./Message";
+import Profile02 from "./Profile02";
+import MessagesList from "./MessagesList";
 
 function PageHandler(){
     const [curr, setCurr] = useState({
@@ -11,6 +14,8 @@ function PageHandler(){
         "user":{},
         "topic":{}
     });
+
+
 
     console.log("num",curr.num);
     switch(curr.num){
@@ -30,12 +35,24 @@ function PageHandler(){
                 <div>
                     <NavBarre curr={curr} changePage={setCurr}/>
                     <Topic id={curr.topic}/>
-                    <h2>Composant liste message</h2>
+                    
+                    <MessagesList objMethod={{"id_topic":curr.topic.id}}/>
                 </div>
             )
+        
+        case 4:
+            return(
+                <div>
+                    <NavBarre curr={curr} changePage={setCurr}/>
+                    <Profile02 user={curr.user}/>
+                </div>
+            )
+        
 
         default:
+            // return <Message id_message="66347748dd933a57a0fa8306"/>
            return <Login changePage={setCurr}/>
+            
     };
 }
 

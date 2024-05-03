@@ -14,7 +14,10 @@ function NavBarre({curr,changePage}) {
                     <input type="button" value="search"/>
                 </li>
                 <li>
-                    <button className="buttonS">Profile</button>
+                    <button className="buttonS" onClick={
+                        () => changePage({...curr,"num":4})
+                    }
+                    >Profile</button>
                 </li>
             </ul>
         </nav>

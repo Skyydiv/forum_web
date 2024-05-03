@@ -98,16 +98,16 @@ app.get("/Forum", async(req,res) => {
 })
 
 app.post("/Topic", async(req,res) => {
-    
+  const client2 = new MongoClient(uri); //need of 2 different client for Topic and MessagesList in order to do request in the same time
     try{
         console.log("debut")
-        await client.connect();
-        const topics = client.db("ForumBDD").collection("Topics");
+        await client2.connect();
+        const topics = client2.db("ForumBDD").collection("Topics");
 
         console.log(req.body,req.body.id);
         const id = new ObjectId(req.body.id);
         const projection = {"_id": 0};
-        const data = await topics.find({"_id": id}).project(projection).next(); // {"text": "blaaaaaaaaaa"} :req.body.id
+        const data = await topics.find({"_id": id}).project(projection).next(); 
         console.log("data",data);
         console.log("fin");
         res.json(data);
@@ -118,8 +118,67 @@ app.post("/Topic", async(req,res) => {
         res.send("Error");
     }
     finally{
-        await client.close();
+        await client2.close();
     }
 })
+
+
+
+//
+app.post("/MessagesList", async(req, res) => {
+    console.log("j'ai reçu une requete sur /MessagesList");
+    const client1 = new MongoClient(uri);
+    try{
+      // Connexion à la base de données
+      await client1.connect();
+      console.log("connected to database");
+  
+      // Opérations sur la collection "messages"
+      const messages = client1.db("ForumBDD").collection("Messages");
+      const messagesList = await messages.find(req.body).toArray();
+      console.log("messages list:", messagesList);
+  
+      // Envoi de la réponse contenant les données de l'utilisateur
+      res.json(messagesList);
+    }
+    catch(err){
+      console.log(err.message);
+      res.status(400);
+      res.send(err.message)
+    }
+    finally{
+      await client1.close();
+    }
+  });
+
+//Récupérer les informations d'un message sur la bdd et les transmettre
+  app.post("/Message", async(req, res) => {
+    console.log("j'ai reçu une requete sur /Message");
+    try{
+      // Connexion à la base de données
+      await client.connect();
+      console.log("connected to database\n body: ",req.body);
+  
+      // Opérations sur la collection "messages"
+      const messages = client.db("ForumBDD").collection("Messages");
+      
+      const dataMessage = await messages.find(req.body).next();
+      console.log("data message:", dataMessage);
+  
+      // Envoi de la réponse contenant les données de l'utilisateur
+      res.json(dataMessage);
+    }
+    catch(err){
+      console.log(err.message);
+      res.status(400);
+      res.send(err.message)
+    }
+    finally{
+      await client.close();
+    }
+  });
+
+
+ 
 
 app.listen(port, () => {console.log(`launching the serveur on port ${port}`)})

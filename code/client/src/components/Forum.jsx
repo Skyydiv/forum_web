@@ -36,7 +36,6 @@ function Forum ({curr,changePage}) {
 
     return(
         <div>
-            {/* <NavBarre/> */}
             <ul>
                 {subjects.map(sub => (
                     <a href='' onClick={(e) =>{e.preventDefault();  handleSelected(sub._id)}}>
