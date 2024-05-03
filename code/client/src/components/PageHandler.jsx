@@ -45,6 +45,7 @@ function PageHandler(){
                 <div>
                     <NavBarre curr={curr} changePage={setCurr}/>
                     <Profile02 user={curr.user}/>
+                    <MessagesList objMethod={{"id_author":curr.topic.id}}/>
                 </div>
             )
         
