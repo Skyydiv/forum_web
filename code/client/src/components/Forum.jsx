@@ -3,6 +3,8 @@ import axios from "axios";
 import {useEffect} from "react";
 import NavBarre from "./NavBarre"
 
+import "../styles/Forum.css"
+
 function Forum ({curr,changePage}) {
     const [subjects, setSubjects] = useState([]);
 
@@ -40,16 +42,22 @@ function Forum ({curr,changePage}) {
 
 
             
-            <input type="button" value="New topic" onClick={() => (
+            <input type="button" value="New topic" className="NewTopic" onClick={() => (
                 changePage(prev =>(
                     {...prev,"num":5}
                 ))
             )}/>
 
-            <ul>
+            <ul className="Bar">
+                <li> Thread </li>
+                <li> Author</li>
+                <li> Creation date</li>
+            </ul>
+
+            <ul className="TopicList">
                 {subjects.map(sub => (
                     <a href='' onClick={(e) =>{e.preventDefault();  handleSelected(sub._id)}}>
-                        <li key ={sub.id}>{sub.subject}</li>
+                        <li key ={sub.id} >{sub.subject}</li>
                     </a>
                 ))}
             </ul>
