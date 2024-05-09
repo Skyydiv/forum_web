@@ -49,10 +49,10 @@ function GetAdminRequests ({changePage, curr}){
     
     return (
             <div>
-            Liste users en attente d'acceptation : 
-            {requestsList.map((request, index) => (
-                <div key={index}>
-                <button onClick={() => changePage({ ...curr, "num": 7, "user_visit":request , "curr":curr})}>{request.username}</button>
+                Liste users en attente d'acceptation : 
+                {requestsList.map((request, index) => (
+                    <div key={index}>
+                    <button onClick={() => changePage({ ...curr, "num": 7, "user_visit":request , "curr":curr})}>{request.username}</button>
            </div>
             ))}
            

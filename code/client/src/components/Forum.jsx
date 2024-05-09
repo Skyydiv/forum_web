@@ -50,9 +50,13 @@ function Forum ({curr,changePage}) {
 
             <table>
                     <thead>
-                        <th>Thread</th>
-                        <th>Author</th>
-                        <th>Creation date</th>
+                        <tr>
+                            <th>Thread</th>
+                            <th>Author</th>
+                            <th>Creation date</th>
+                            <th>Privilege</th>
+                        </tr>
+                        
                     </thead>
 
                     <tbody>
@@ -61,8 +65,11 @@ function Forum ({curr,changePage}) {
                                 <td>
                                     <a href='' onClick={(e) =>{e.preventDefault();  handleSelected(sub._id)}}> {sub.subject} </a>
                                 </td>
-                                <td>rien</td>
-                                <td>rien</td>
+                                <td>
+                                    <a href='' onClick={(e) =>{e.preventDefault();  handleSelected(sub._id)}}> {sub.author} </a>
+                                </td>
+                                <td>{sub.date}</td>
+                                <td>{sub.privilege}</td>
                             </tr>
                         ))}
 

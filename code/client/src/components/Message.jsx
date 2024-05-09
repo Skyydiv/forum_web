@@ -12,8 +12,8 @@ function Message (infos){
 
     useEffect(() => {
         setMessageData(infos.infos);
-        console.log("je suis dans message, voila les infos", infos);
-        console.log(infos.infos.content);
+        // console.log("je suis dans message, voila les infos", infos);
+        // console.log(infos.infos.content);
     }, [infos]);
 
     

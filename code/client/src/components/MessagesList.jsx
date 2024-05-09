@@ -32,9 +32,14 @@ function MessagesList ({criteria}){
     return (
         //<li key ={message.id}>{message.content}</li>
         <div>
+            <p>Liste des messages:</p>
             {messagesList.map(message => (
-                <Message infos={message}/>  
+                <div>
+                    <Message infos={message}/>
+                    <hr/>
+                </div>
             ))}
+            
         </div>
     );
 }

@@ -13,48 +13,44 @@ function Profile02({user, username, changePage, curr}) {
         message: ""
     });
 
-    const [userData, setUserData] = useState({
-        _id :"",
-        username: "",
-        password: "",
-        privilege :""
-    });
+    const [userData, setUserData] = useState(user);
 
     axios.defaults.baseURL = "http://localhost:8000";
     
     //récupérer les données de l'user
 
     // INUTILE on a toujours les données de l'utilasateur courant
-    const fetchData = async () => {
-        try {
-            console.log("Je fais une requête pour accéder aux infos du profile");
-            let responseData;
-            if (user) {
-                // Si les props user ne sont pas vides, utilisez ces données
-                console.log("je passe par les props");
-                responseData = user;
-            } else {
-                // Sinon, faites une requête POST pour récupérer les données
-                console.log("je fais une requête");
-                const res = await axios.post("/User", {"username" : username});
-                responseData = res.data;
-            }
-            setUserData(responseData);
-        } catch (err) {
-            setError({
-                value: true,
-                message: "Erreur lors de la requête."
-            });
-            console.log(err.message);
-        }
-    };
+    // const fetchData = async () => {
+    //     try {
+    //         console.log("Je fais une requête pour accéder aux infos du profile", user);
+    //         let responseData;
+    //         if (user) {
+    //             // Si les props user ne sont pas vides, utilisez ces données
+    //             console.log("je passe par les props");
+    //             responseData = user;
+    //         } else {
+    //             // Sinon, faites une requête POST pour récupérer les données
+    //             console.log("je fais une requête");
+    //             const res = await axios.post("/User", {"username" : username});
+    //             responseData = res.data;
+    //         }
+    //         setUserData(responseData);
+    //     } catch (err) {
+    //         setError({
+    //             value: true,
+    //             message: "Erreur lors de la requête."
+    //         });
+    //         console.log(err.message);
+    //     }
+    // };
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+    // useEffect(() => {
+    //     fetchData();
+    // }, []);
 
      //faire une seule requête à la bdd 
     //pour s'inscrire sur la liste de demande d'admin
+    
     const [isAdminRequested, setIsAdminRequested] = useState(false);
     const [RequestSent, setRequestSent] = useState(false);
 

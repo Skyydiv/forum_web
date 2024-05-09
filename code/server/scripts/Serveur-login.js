@@ -101,7 +101,7 @@ app.post("/Forum", async(req,res) => {
             // Si req != "admin", filtrer pour les sujets où privilege = "user"
             filter = { privilege: "user" };
         }
-        const projection = { "subject": 1, "_id": 1 };
+        const projection = { "subject": 1, "author":1, "date":1, "privilege":1 ,"_id": 1 };
         const data = await topics.find(filter).project(projection).toArray();
 
         console.log(data);
