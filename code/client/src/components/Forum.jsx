@@ -38,7 +38,7 @@ function Forum ({curr,changePage}) {
  
 
     return(
-        <div>
+        <div className="Forum">
 
 
             
@@ -48,19 +48,40 @@ function Forum ({curr,changePage}) {
                 ))
             )}/>
 
-            <ul className="Bar">
+            <table>
+                    <thead>
+                        <th>Thread</th>
+                        <th>Author</th>
+                        <th>Creation date</th>
+                    </thead>
+
+                    <tbody>
+                        {subjects.map(sub => (
+                            <tr>
+                                <td>
+                                    <a href='' onClick={(e) =>{e.preventDefault();  handleSelected(sub._id)}}> {sub.subject} </a>
+                                </td>
+                                <td>rien</td>
+                                <td>rien</td>
+                            </tr>
+                        ))}
+
+                    </tbody>
+
+            </table>
+            {/* <ul className="Bar">
                 <li> Thread </li>
                 <li> Author</li>
                 <li> Creation date</li>
-            </ul>
+            </ul> */}
 
-            <ul className="TopicList">
+            {/* <ul className="TopicList">
                 {subjects.map(sub => (
                     <a href='' onClick={(e) =>{e.preventDefault();  handleSelected(sub._id)}}>
                         <li key ={sub.id} >{sub.subject}</li>
                     </a>
                 ))}
-            </ul>
+            </ul> */}
         </div>
     );
 
