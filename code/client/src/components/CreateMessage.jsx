@@ -66,8 +66,10 @@ function CreateMessage({user,id_topic,changePage}) {
 
                    
                    <li>
-                       <input type="submit" onClick={submit}/>
+                       <input type="submit" value="Submit" onClick={submit}/>
+                       <input type="button" value="Cancel" onClick={() => changePage(prev => ({...prev, "num":3}))}/>
                     </li>
+
                 </ul>
             </form>
         </div>
