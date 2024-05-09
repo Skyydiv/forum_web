@@ -2,6 +2,7 @@
 import axios from 'axios';
 import {useState} from "react"
 import Forum from "./Forum"
+import './Login.css'
 
 function Login({changePage}) {
     const [isConnected, setIsConnected] = useState(false);

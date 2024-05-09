@@ -7,12 +7,16 @@ import NavBarre from "./NavBarre";
 import Profile02 from "./Profile02";
 import MessagesList from "./MessagesList";
 import CreateTopic from "./CreateTopic";
+import CreateMessage from "./CreateMessage";
+import GetAdminRequests from "./GetAdminRequests";
+import ShowProfile from "./ShowProfile";
 
 function PageHandler(){
     const [curr, setCurr] = useState({
         "num":0,
         "user":{},
-        "topic":{}
+        "topic":{},
+        "user_visit":{}
     });
 
 
@@ -34,12 +38,14 @@ function PageHandler(){
         
         // topic
         case 3:
+            console.log("dans pageHandler topic :", curr.topic.id);
+            
             return(
                 <div>
                     <NavBarre curr={curr} changePage={setCurr}/>
-                    <Topic id={curr.topic}/>
+                    <Topic topic_id={curr.topic} changePage={setCurr}/>
+                    <MessagesList criteria={{"id_topic":curr.topic.id}}/>
                     
-                    <MessagesList objMethod={{"id_topic":curr.topic.id}}/>
                 </div>
             )
         
@@ -47,19 +53,36 @@ function PageHandler(){
         case 4:
             return(
                 <div>
+                    
                     <NavBarre curr={curr} changePage={setCurr}/>
-                    <Profile02 user={curr.user}/>
-                    <MessagesList objMethod={{"id_author":curr.topic.id}}/>
+                    <Profile02 user={curr.user} changePage={setCurr} curr={curr}/>
+                    <MessagesList criteria={{"author":curr.user.username}}/>
                 </div>
             )
         
         //create Topic
         case 5:
-                return(
+            return(
+                <div>
+                    <NavBarre curr={curr} changePage={setCurr}/>
+                    <CreateTopic user={curr.user} changePage={setCurr}/>
+                </div>
+            )
+
+        //create Message
+        case 6:
+            return (
+                <div>
+                <NavBarre curr={curr} changePage={setCurr}/>
+                <CreateMessage user={curr.user} id_topic={curr.topic} changePage={setCurr}/>
+            </div> 
+            )
+            case 7:
+                return (
                     <div>
-                        <NavBarre curr={curr} changePage={setCurr}/>
-                        <CreateTopic user={curr.user} changePage={setCurr}/>
-                    </div>
+                    <NavBarre curr={curr} changePage={setCurr}/>
+                    <ShowProfile user={curr.user_visit} curr={curr}/>
+                </div> 
                 )
 
         default:

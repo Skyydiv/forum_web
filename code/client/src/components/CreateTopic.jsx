@@ -3,15 +3,38 @@ import {useState} from "react"
 import axios from "axios"
 
 function CreateTopic({user,changePage}) {
+    const options = {
+        timeZone: 'Europe/Paris',
+        year: 'numeric',
+        month: 'numeric',
+        day: 'numeric',
+        hour: 'numeric',
+        minute: 'numeric'
+      };
+
     const [formInfos, setFormInfo] = useState({
         "subject":"",
-        "text":""
+        "text":"",
+        "author":user.username,
+        "privilege":"user",
+        "date":new Date().toLocaleString('fr-FR', options)
     });
 
     axios.defaults.baseURL="http://localhost:8000";
+
+
+    const handleChangePrivilege = (e) => {
+        setFormInfo(prev => ({
+            ...prev,
+            "privilege": prev.privilege === "user" ? "admin" : "user"
+        }));
+    };
     
     const handleChange = (e) => {
-        setFormInfo(prev => ({...prev, [e.target.name]:e.target.value}))
+        setFormInfo(prev => ({
+            ...prev, 
+            [e.target.name]:e.target.value
+        }))
     }
 
     const submit = (e) =>{
@@ -35,17 +58,23 @@ function CreateTopic({user,changePage}) {
 
             <form className="CreateTopic">
                 <ul>
+               
                     <li>
                         <label htmlFor="subject">Subject: </label>
-                        <textarea id="subject" name="subject" rows="1" cols="100" maxlength="1000" onChange={handleChange}/>
+                        <textarea id="subject" name="subject" rows="1" cols="100" maxLength="1000" onChange={handleChange}/>
                     </li>
 
                     <li className="box">
                         <label htmlFor="text"> Text: </label>
-                        <textarea id="text" className="txt" name="text" rows="25" cols="70" maxlength="1000" onChange={handleChange}/>
+                        <textarea id="text" className="txt" name="text" rows="25" cols="70" maxLength="1000" onChange={handleChange}/>
                     </li>
 
-                   
+                    {user.privilege === "admin" && (
+                    <li>
+                        <label htmlFor="privilege"> Privilege: </label>
+                        <button type="button" onClick={handleChangePrivilege}>{formInfos.privilege}</button>
+                    </li>
+                    )}
                    <li>
                        <input type="submit" onClick={submit}/>
                     </li>

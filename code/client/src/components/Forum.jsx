@@ -7,9 +7,10 @@ function Forum ({curr,changePage}) {
     const [subjects, setSubjects] = useState([]);
 
     const url = "http://localhost:8000";
+    console.log(curr.user);
 
     const retrieveSubjects = () => {
-        axios.get(`${url}/forum`)
+        axios.post(`${url}/forum`, curr.user)
 
         .then(res => {
             // console.log("cool\n", res.data);
@@ -36,6 +37,9 @@ function Forum ({curr,changePage}) {
 
     return(
         <div>
+
+
+            
             <input type="button" value="New topic" onClick={() => (
                 changePage(prev =>(
                     {...prev,"num":5}

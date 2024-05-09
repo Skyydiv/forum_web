@@ -1,15 +1,22 @@
 import {useEffect, useState} from "react"
 import axios from "axios"
 
-function Message ({infos}){
-    //props = identifiant du message
+function Message (infos){
     
     const [error, setError] = useState({
         value: false,
         message: ""
     });
 
-    const [messageData, setMessageData] = useState(infos);
+    const [messageData, setMessageData] = useState({});
+
+    useEffect(() => {
+        setMessageData(infos.infos);
+        console.log("je suis dans message, voila les infos", infos);
+        console.log(infos.infos.content);
+    }, [infos]);
+
+    
 
     let bool = true;
 
@@ -21,15 +28,15 @@ function Message ({infos}){
             {/* <p>oui</p> */}
             {messageData.content ? (
                 <div>
-                    <h1>Message : </h1>
-                    <p>Id author: {messageData.id_author}</p> 
-                    <p>Id topic : {messageData.id_topic}</p>
+                    <h1>Message </h1>
+                    <p>author : {messageData.author}</p> 
+                    <p>date : {messageData.date}</p>
                     <p> {messageData.content}</p>
                 </div>
             ) : (
                 <p>Chargement des données...</p>
             )}
-            {error.value && <p>{error.message}</p>}
+            {error.value && typeof error.message === 'string' && <p>{error.message}</p>}
         </div>
     )
 }

@@ -4,6 +4,7 @@ import Login from './components/Login.jsx'
 import Register from './components/Register.jsx'
 // import './index.css'
 import PageHandler from "./components/PageHandler.jsx"
+import CreateMessage from './components/CreateMessage.jsx'
 
 
 // import {

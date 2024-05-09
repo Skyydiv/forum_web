@@ -7,6 +7,8 @@ function Register({changePage}){
     const [infos,setInfos] = useState({
         "username":"",
         "password":"",
+        "privilege":"user",
+        "adminRequest":"false"
     });
 
     const [confirmP,setConfirmP] = useState(true);
@@ -20,12 +22,12 @@ function Register({changePage}){
     const handleSubmit = ( e =>{
         e.preventDefault(); 
         if(infos.username!="" && infos.password!="" && confirmP){
-            axios.post(`${url}/signUp`,infos)
+            axios.post(`${url}/Register`,infos)
             .then((response) =>{
                 console.log("succes subscription");
             })
             .catch(err =>{
-                console.err("error inscription", err);
+                console.error("error inscription", err);
             })
         }
         
@@ -50,7 +52,7 @@ function Register({changePage}){
 
                 <input type="submit" value="S'inscrire"/>
 
-                <input type="button" value="Page de connection" onClick={() => changePage({"num":0})}/>
+                <input type="button" value="Page de connexion" onClick={() => changePage({"num":0})}/>
                 
             </form>
             
