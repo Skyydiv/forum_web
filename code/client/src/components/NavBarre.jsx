@@ -1,4 +1,4 @@
-//import "../styles/nav.css"
+import "../styles/nav.css"
 
 function NavBarre({curr,changePage}) {
     return(
@@ -9,11 +9,6 @@ function NavBarre({curr,changePage}) {
                         ()=>changePage({...curr,"num":2, "topic":{}})
                     }/>
                 </li>
-                <li>
-                    <input className="buttonS" type="button" value="Log out" onClick={
-                        ()=>changePage({"num":0, "topic":{}, "user" :{}})
-                    }/>
-                </li>
 
                 <li>
                     <input placeholder="Research a topic"/>
@@ -22,6 +17,12 @@ function NavBarre({curr,changePage}) {
                 <li>
                     <button className="buttonS" onClick={
                         () => changePage({...curr,"num":4})}>Profile</button>
+                </li>
+
+                <li>
+                    <input className="buttonS" type="button" value="Log out" onClick={
+                        ()=>changePage({"num":0, "topic":{}, "user" :{}})
+                    }/>
                 </li>
             </ul>
         </nav>
