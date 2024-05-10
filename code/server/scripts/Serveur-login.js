@@ -272,11 +272,12 @@ app.post("/MessagesList", async(req, res) => {
     try{
       // Connexion à la base de données
       await client.connect();
-      console.log("Voila le contenu de ma demande", req.body);
-  
+      console.log("Voila le contenu de ma demande user", req.body);
+      
       // Opérations sur la collection "users"
+      const projection = {"username":1, "privilege":1, "adminRequest":1};
       const users = client.db("ForumBDD").collection("users");
-      const dataUser = await users.find(req.body).next();
+      const dataUser = await users.find({"username":req.body.username}).project(projection).next();
       console.log("dans /User : data user:", dataUser);
   
       // Envoi de la réponse contenant les données de l'utilisateur

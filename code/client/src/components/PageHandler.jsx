@@ -16,7 +16,7 @@ function PageHandler(){
         "num":0,
         "user":{},
         "topic":{},
-        "user_visit":{}
+        "user_visit":""
     });
 
 
@@ -44,7 +44,7 @@ function PageHandler(){
                 <div>
                     <NavBarre curr={curr} changePage={setCurr}/>
                     <Topic topic_id={curr.topic} changePage={setCurr}/>
-                    <MessagesList criteria={{"id_topic":curr.topic.id}}/>
+                    <MessagesList changePage={setCurr} criteria={{"id_topic":curr.topic.id}}/>
                     
                 </div>
             )
@@ -56,7 +56,7 @@ function PageHandler(){
                     
                     <NavBarre curr={curr} changePage={setCurr}/>
                     <Profile02 user={curr.user} changePage={setCurr} curr={curr}/>
-                    <MessagesList criteria={{"author":curr.user.username}}/>
+                    <MessagesList changePage={setCurr} criteria={{"author":curr.user.username}}/>
                 </div>
             )
         
@@ -81,7 +81,8 @@ function PageHandler(){
                 return (
                     <div>
                     <NavBarre curr={curr} changePage={setCurr}/>
-                    <ShowProfile user={curr.user_visit} curr={curr}/>
+                    <ShowProfile curr={curr}/>
+                    <MessagesList changePage={setCurr} criteria={{"author":curr.user_visit}}/>
                 </div> 
                 )
 

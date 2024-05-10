@@ -5,9 +5,13 @@ import GetAdminRequests from "./GetAdminRequests.jsx";
 import MessagesList from "./MessagesList.jsx";
 import SetAdminRequest from "./SetAdminRequest.jsx";
 
-function ShowProfile({user, curr}) {
+
+
+
+function ShowProfile({curr}) {
     //cas n°1 : les données de l'user sont passées dans les props
     //cas n°2 : seulement l'username' de l'user est donné
+    
     
     const [error, setError] = useState({
         value: false,
@@ -17,14 +21,29 @@ function ShowProfile({user, curr}) {
     const [userData, setUserData] = useState({
         _id :"",
         username: "",
-        password: "",
+        // password: "",
         privilege :"",
         adminRequest:""
     });
 
+    axios.defaults.baseURL = "http://localhost:8000";
+
+    let retrieveUser = () =>{
+        console.log("id user",curr.user_visit);
+        axios.post("/User", {"username":curr.user_visit})
+        .then( (rep)=> {
+            console.log("show profile res", rep.data);
+            setUserData(rep.data)
+        })
+
+        .catch((e) => {
+            console.error(e);
+        })
+    }
+
     useEffect(() => {
-        console.log("curr =", user)
-        setUserData(user);
+        // console.log("curr =", curr);
+        retrieveUser();
     }, []);
     
     return (
@@ -36,11 +55,11 @@ function ShowProfile({user, curr}) {
                 </div>
             )}
 
-            {userData ? (
+            {(userData.username !="") ? (
                 <div>
                     <h1>Profil de l'utilisateur :</h1>
                     <p>Nom d'utilisateur : {userData.username}</p> 
-                    <MessagesList criteria={{"author":userData.username}}/>
+                    
                 </div>
             ) : (
                 <p>Chargement des données...</p>

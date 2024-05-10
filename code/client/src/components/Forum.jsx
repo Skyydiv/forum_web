@@ -35,7 +35,11 @@ function Forum ({curr,changePage}) {
             "topic": {"id":arg}
         })
     }
- 
+    
+    const goUserProfile = (username) => {
+        changePage(prev => ({...prev, "num":7, "user_visit":username}));
+    } 
+    
 
     return(
         <div className="Forum">
@@ -66,7 +70,7 @@ function Forum ({curr,changePage}) {
                                     <a href='' onClick={(e) =>{e.preventDefault();  handleSelected(sub._id)}}> {sub.subject} </a>
                                 </td>
                                 <td>
-                                    <a href='' onClick={(e) =>{e.preventDefault();  handleSelected(sub._id)}}> {sub.author} </a>
+                                    <a href='' onClick={(e) =>{e.preventDefault();  goUserProfile(sub.author)}}> {sub.author} </a>
                                 </td>
                                 <td>{sub.date}</td>
                                 <td>{sub.privilege}</td>
@@ -76,19 +80,7 @@ function Forum ({curr,changePage}) {
                     </tbody>
 
             </table>
-            {/* <ul className="Bar">
-                <li> Thread </li>
-                <li> Author</li>
-                <li> Creation date</li>
-            </ul> */}
-
-            {/* <ul className="TopicList">
-                {subjects.map(sub => (
-                    <a href='' onClick={(e) =>{e.preventDefault();  handleSelected(sub._id)}}>
-                        <li key ={sub.id} >{sub.subject}</li>
-                    </a>
-                ))}
-            </ul> */}
+            
         </div>
     );
 

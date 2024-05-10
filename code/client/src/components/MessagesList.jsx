@@ -2,7 +2,7 @@ import {useEffect, useState} from "react"
 import axios from "axios"
 import Message from "./Message";
 
-function MessagesList ({criteria}){
+function MessagesList ({criteria, changePage}){
     
     const [error, setError] = useState({
         value: false,
@@ -35,7 +35,7 @@ function MessagesList ({criteria}){
             <p>Liste des messages:</p>
             {messagesList.map(message => (
                 <div>
-                    <Message infos={message}/>
+                    <Message infos={message} changePage={changePage}/>
                     <hr/>
                 </div>
             ))}
