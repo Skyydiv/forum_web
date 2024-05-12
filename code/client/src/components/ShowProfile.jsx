@@ -1,10 +1,5 @@
 import {useEffect, useState, ObjectID} from "react"
 import axios from "axios"
-// import GetAdminRequests from "./GetAdminRequests.jsx";
-// import MessagesList from "./MessagesList.jsx";
-// import SetAdmin from "./SetAdmin.jsx";
-// import SetMember from "./SetMember.jsx";
-import RemoveAdminPrivilege from "./RemoveAdminPrivilege.jsx";
 
 
 
@@ -73,6 +68,15 @@ function ShowProfile({curr,changePage}) {
             console.error(err.message);
         }
     }
+
+    const RemoveAdminPrivilege = async () => {
+        try {
+            console.log(userData);
+            const res = await axios.post("/RemoveAdmin", userData);
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
     
     
     return (
@@ -94,7 +98,7 @@ function ShowProfile({curr,changePage}) {
 
             {/* pouvoir supprimer les privilèges d'un admin quand on est admin*/}
             {curr.user.privilege ==="admin" && userData.privilege=="admin" &&(
-                <button onClick={()=> RemoveAdminPrivilege(userData)}> Remove admin privilege </button>
+                <button onClick={()=> RemoveAdminPrivilege()}> Remove admin privilege </button>
             )}
 
             {/*afficher les infos de l'user visité*/}

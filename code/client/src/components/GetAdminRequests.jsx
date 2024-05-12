@@ -1,11 +1,5 @@
 import {useEffect, useState} from "react"
 import axios from "axios"
-import Message from "./Message";
-import NavBarre from "./NavBarre"
-import Profile02 from "./Profile02";
-import MessagesList from "./MessagesList";
-import SetAdminRequest from "./SetAdmin";
-import Forum from "./Forum";
 
 function GetAdminRequests ({changePage, curr}){
     //Affiche les la liste des users en attente d'acceptation d'admin
@@ -33,19 +27,8 @@ function GetAdminRequests ({changePage, curr}){
         getToServer();
     }, []);
     
-    const acceptAdminRequest = async (request) => {
-        try {
-            // Appel à la fonction SetAdminRequest avec les données nécessaires
-            SetAdminRequest(request, true);
-            // Peut-être une logique supplémentaire après avoir accepté la demande
-        } catch (err) {
-            setError({
-                value: true,
-                message: "Erreur lors de l'acceptation de la demande."
-            });
-            console.error(err.message);
-        }
-    };
+  
+
     
     return (
             <div>

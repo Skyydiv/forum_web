@@ -1,17 +1,10 @@
 import {useEffect, useState, ObjectID} from "react"
 import axios from "axios"
-import AdminRequest from "./AdminRequest.jsx"
-import GetAdminRequests from "./GetAdminRequests.jsx";
-import DeleteAccount from "./DeleteAccount.jsx";
 
-function Profile02({user, username, changePage, curr}) {
+function Profile02({user, changePage, curr}) {
     //cas n°1 : les données de l'user sont passées dans les props
     //cas n°2 : seulement l'username' de l'user est donné
     
-    const [error, setError] = useState({
-        value: false,
-        message: ""
-    });
 
     const [userData, setUserData] = useState(user);
 
@@ -19,24 +12,30 @@ function Profile02({user, username, changePage, curr}) {
   
      //faire une seule requête à la bdd 
     //pour s'inscrire sur la liste de demande d'admin
-    
-    const [isAdminRequested, setIsAdminRequested] = useState(false);
-    const [RequestSent, setRequestSent] = useState(false);
 
-    const handleSelected = () => {
-        console.log("demande d'admin");
-        setIsAdminRequested(true);
+    const adminDemand = async () => {
+        try {
+            //modifier le champ adminRequest à true dans users
+            console.log("je fais une demande");
+            const res = await axios.post("/AdminRequest", userData);
+        } catch (err) {
+            setError({
+                value: true,
+                message: "Erreur lors de la requête."
+            });
+            console.error(err.message);
+        }
     }
 
-    useEffect(() => {
-        if (isAdminRequested && !RequestSent) {
-            setRequestSent(true);
-        }
-    }, [isAdminRequested]);
+ 
 
-    const handlechange = () => {
+    const DeleteAccount = async() => {
         // console.log(arg);
-        DeleteAccount(curr, changePage)
+        try {
+            const res = await axios.post("/DeleteAccount", curr.user);
+        } catch (err) {
+            console.error(err.message);
+        }
         changePage({"num":0, "topic":{}, "user" :{}})
     }
 
@@ -47,12 +46,12 @@ function Profile02({user, username, changePage, curr}) {
     console.log(user.adminRequest)
     return (
         <div>
-            {user.adminRequest ==="true" && (<p> Your request has been sent successfully.</p>)}
-            {userData.privilege === "user" && user.adminRequest !=="true" && (
+            {user.adminRequest ==="true" && (<p> Your admin request has been sent successfully.</p>)}
+            {userData.privilege === "user" && userData.adminRequest !=="true" && (
                     <li>
                         <button type="button" onClick={(e) =>{
                             e.preventDefault();
-                            handleSelected();
+                            adminDemand();
                         }}> demande d'admin </button>
                     </li>
                     )}
@@ -65,18 +64,17 @@ function Profile02({user, username, changePage, curr}) {
                     </div>
                     )} 
             
-            {isAdminRequested && <AdminRequest user={userData}/>}
 
             {userData ? (
                 <div>
                     <h1>Profil de {userData.username}</h1> 
-                    <button onClick={() => handlechange() }>deleteAccount</button>
+                    <button onClick={() => DeleteAccount() }>deleteAccount</button>
                 
                 </div>
             ) : (
                 <p>Chargement des données...</p>
             )}
-            {error.value && <p>{error.message}</p>}
+            
         </div>
     )
 }
