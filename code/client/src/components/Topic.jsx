@@ -1,7 +1,8 @@
 import axios from "axios";
 import {useEffect,useState} from "react";
+import DeleteTopic from "./DeleteTopic";
 
-function Topic({topic_id, changePage}){
+function Topic({topic_id, changePage, userLogged}){
     const [topic, setTopic] = useState();
 
 
@@ -22,10 +23,15 @@ function Topic({topic_id, changePage}){
     useEffect( () => {
         retrieveTopic();
     },[])
-
+    
     if(topic){
         return(
+            
             <div>
+                {(userLogged.privilege === "admin" || userLogged.username === topic.author) && (
+                        <button onClick={() => DeleteTopic(topic)}>delete topic </button>)
+                }
+
                 <h1>{topic.subject} </h1>
                 <p>{topic.text}</p>
                 <p>écrit par : {topic.author} à {topic.date}</p>

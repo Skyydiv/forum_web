@@ -70,9 +70,16 @@ function Profile02({user, username, changePage, curr}) {
         DeleteAccount(curr, changePage)
         changePage({"num":0, "topic":{}, "user" :{}})
     }
+
+    const ManageUsers = () =>{
+        changePage({...curr, "num" : 8})
+    }
+
+    console.log(user.adminRequest)
     return (
         <div>
-            {userData.privilege === "user" && (
+            {user.adminRequest ==="true" && (<p> Your request has been sent successfully.</p>)}
+            {userData.privilege === "user" && user.adminRequest !=="true" && (
                     <li>
                         <button type="button" onClick={(e) =>{
                             e.preventDefault();
@@ -82,15 +89,18 @@ function Profile02({user, username, changePage, curr}) {
                     )}
             
             {userData.privilege === "admin" && (
-                    <GetAdminRequests changePage={changePage} curr={curr}/>
-                    )}
+                    <div>
+                        <button type="button" onClick={(e) =>{
+                            ManageUsers();
+                        }}> Manage Users </button>
+                    </div>
+                    )} 
             
-            {isAdminRequested && <AdminRequest user={userData} />}
+            {isAdminRequested && <AdminRequest user={userData}/>}
 
             {userData ? (
                 <div>
-                    <h1>Profil de l'utilisateur :</h1>
-                    <p>Nom d'utilisateur : {userData.username}</p> 
+                    <h1>Profil de {userData.username}</h1> 
                     <button onClick={() => handlechange() }>deleteAccount</button>
                 
                 </div>

@@ -10,6 +10,7 @@ import CreateTopic from "./CreateTopic";
 import CreateMessage from "./CreateMessage";
 import GetAdminRequests from "./GetAdminRequests";
 import ShowProfile from "./ShowProfile";
+import ManageUsers from "./ManageUsers";
 
 function PageHandler(){
     const [curr, setCurr] = useState({
@@ -43,8 +44,8 @@ function PageHandler(){
             return(
                 <div>
                     <NavBarre curr={curr} changePage={setCurr}/>
-                    <Topic topic_id={curr.topic} changePage={setCurr}/>
-                    <MessagesList changePage={setCurr} criteria={{"id_topic":curr.topic.id}}/>
+                    <Topic topic_id={curr.topic} changePage={setCurr} userLogged={curr.user}/>
+                    <MessagesList changePage={setCurr} criteria={{"id_topic":curr.topic.id}} userLogged={curr.user}/>
                     
                 </div>
             )
@@ -56,7 +57,7 @@ function PageHandler(){
                     
                     <NavBarre curr={curr} changePage={setCurr}/>
                     <Profile02 user={curr.user} changePage={setCurr} curr={curr}/>
-                    <MessagesList changePage={setCurr} criteria={{"author":curr.user.username}}/>
+                    <MessagesList changePage={setCurr} criteria={{"author":curr.user.username}} userLogged={curr.user}/>
                 </div>
             )
         
@@ -77,15 +78,23 @@ function PageHandler(){
                 <CreateMessage user={curr.user} id_topic={curr.topic} changePage={setCurr}/>
             </div> 
             )
-            case 7:
-                return (
-                    <div>
-                    <NavBarre curr={curr} changePage={setCurr}/>
-                    <ShowProfile curr={curr}/>
-                    <MessagesList changePage={setCurr} criteria={{"author":curr.user_visit}}/>
-                </div> 
-                )
 
+        //Affiche le profile d'user différent de l'user loggé
+        case 7:
+            return (
+                <div>
+                <NavBarre curr={curr} changePage={setCurr}/>
+                <ShowProfile curr={curr}/>
+                <MessagesList changePage={setCurr} criteria={{"author":curr.user_visit}} userLogged={curr.user}/>
+            </div> 
+            )
+        case 8:
+            return (
+                <div>
+                <NavBarre curr={curr} changePage={setCurr}/>
+                <ManageUsers changePage={setCurr} curr={curr}/>
+            </div> 
+            )
         default:
             // return <Message id_message="66347748dd933a57a0fa8306"/>
            return <Login changePage={setCurr}/>

@@ -1,9 +1,10 @@
 import {useEffect, useState, ObjectID} from "react"
 import axios from "axios"
-import AdminRequest from "./AdminRequest.jsx"
 import GetAdminRequests from "./GetAdminRequests.jsx";
 import MessagesList from "./MessagesList.jsx";
-import SetAdminRequest from "./SetAdminRequest.jsx";
+import SetAdmin from "./SetAdmin.jsx";
+import SetMember from "./SetMember.jsx";
+import RemoveAdminPrivilege from "./RemoveAdminPrivilege.jsx";
 
 
 
@@ -48,13 +49,27 @@ function ShowProfile({curr}) {
     
     return (
         <div>
+            {/*accepter ou non une demande de membre (inscription)*/}
             {curr.user.privilege ==="admin" && userData.adminRequest=="true" &&(
                 <div> 
-                    <button onClick={() =>  SetAdminRequest(userData, true)}>accept</button>
-                    <button onClick={() => SetAdminRequest(userData, false)}>refuse</button>
+                    <button onClick={() =>  SetAdmin(userData, true)}>accept</button>
+                    <button onClick={() => SetAdmin(userData, false)}>refuse</button>
+                </div>
+            )}
+            {/*accepter ou non une demande d'admin*/}
+            {curr.user.privilege ==="admin" && userData.privilege=="awaiting" &&(
+                <div> 
+                    <button onClick={() =>  SetMember(userData, true)}>accept</button>
+                    <button onClick={() => SetMember(userData, false)}>refuse</button>
                 </div>
             )}
 
+            {/* pouvoir supprimer les privilèges d'un admin quand on est admin*/}
+            {curr.user.privilege ==="admin" && userData.privilege=="admin" &&(
+                <button onClick={()=> RemoveAdminPrivilege(userData)}> Remove admin privilege </button>
+            )}
+
+            {/*afficher les infos de l'user visité*/}
             {(userData.username !="") ? (
                 <div>
                     <h1>Profil de l'utilisateur :</h1>

@@ -1,8 +1,9 @@
 import {useEffect, useState} from "react"
 import axios from "axios"
 import Message from "./Message";
+import DeleteMessage from "./DeleteMessage";
 
-function MessagesList ({criteria, changePage}){
+function MessagesList ({criteria, changePage, userLogged}){
     
     const [error, setError] = useState({
         value: false,
@@ -29,6 +30,11 @@ function MessagesList ({criteria, changePage}){
         postToServer();
     }, [criteria]);
 
+    const handleChange = (message) => {
+        console.log("je suis dans handleChange")
+        DeleteMessage (message)
+        }
+    
     return (
         //<li key ={message.id}>{message.content}</li>
         <div>
@@ -36,7 +42,9 @@ function MessagesList ({criteria, changePage}){
             {messagesList.map(message => (
                 <div>
                     <Message infos={message} changePage={changePage}/>
-                    <hr/>
+                    {(userLogged.privilege === "admin" || userLogged.username === message.author) && (
+                        <button onClick={() => handleChange(message) }>delete message</button>)}
+                    
                 </div>
             ))}
             

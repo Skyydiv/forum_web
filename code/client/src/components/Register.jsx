@@ -7,7 +7,7 @@ function Register({changePage}){
     const [infos,setInfos] = useState({
         "username":"",
         "password":"",
-        "privilege":"user",
+        "privilege":"awaiting",
         "adminRequest":"false"
     });
 

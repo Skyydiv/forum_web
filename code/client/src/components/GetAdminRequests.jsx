@@ -4,7 +4,7 @@ import Message from "./Message";
 import NavBarre from "./NavBarre"
 import Profile02 from "./Profile02";
 import MessagesList from "./MessagesList";
-import SetAdminRequest from "./SetAdminRequest";
+import SetAdminRequest from "./SetAdmin";
 import Forum from "./Forum";
 
 function GetAdminRequests ({changePage, curr}){
@@ -49,7 +49,6 @@ function GetAdminRequests ({changePage, curr}){
     
     return (
             <div>
-                Liste users en attente d'acceptation : 
                 {requestsList.map((request, index) => (
                     <div key={index}>
                     <button onClick={() => changePage({ ...curr, "num": 7, "user_visit":request.username , "curr":curr})}>{request.username}</button>

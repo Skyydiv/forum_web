@@ -4,7 +4,7 @@ import {useState, useEffect} from "react"
 //ajoute l'user dans la liste des users
 // en attente d'acceptation/refus du statut Admin
 
-function AdminRequest(user){
+function AdminRequest({user}){
 
     const [error, setError] = useState({
         value: false,
@@ -44,7 +44,7 @@ function AdminRequest(user){
     return (
         <div>
             {isOnList ? (
-                console.log("L'utilisateur est inscrit sur la liste des demandes d'admin !")
+                console.log("L'utilisateur a bien demandé à être admin !")
             ) : (
                 console.log("Il semble qu'il y ai eu un problème !")
             )}

@@ -32,7 +32,9 @@ app.post("/login",async(req,res)=>{
         if(dataUser.password != req.body.password){
             throw new Error("Invalid password");
         }
-
+        if(dataUser.privilege === "awaiting"){
+            throw new Error("Your inscription is still not confirmed yet !");
+        }
         res.status(200);
         res.json({"value":true,"user":dataUser});
         res.end();
@@ -213,31 +215,31 @@ app.post("/MessagesList", async(req, res) => {
   });
 
 //Récupérer les informations d'un message sur la bdd et les transmettre
-  app.post("/Message", async(req, res) => {
-    console.log("j'ai reçu une requete sur /Message");
-    try{
-      // Connexion à la base de données
-      await client.connect();
-      console.log("connected to database\n body: ",req.body);
+  // app.post("/Message", async(req, res) => {
+  //   console.log("j'ai reçu une requete sur /Message");
+  //   try{
+  //     // Connexion à la base de données
+  //     await client.connect();
+  //     console.log("connected to database\n body: ",req.body);
   
-      // Opérations sur la collection "messages"
-      const messages = client.db("ForumBDD").collection("Messages");
+  //     // Opérations sur la collection "messages"
+  //     const messages = client.db("ForumBDD").collection("Messages");
       
-      const dataMessage = await messages.find(req.body).next();
-      console.log("data message:", dataMessage);
+  //     const dataMessage = await messages.find(req.body).next();
+  //     console.log("data message:", dataMessage);
   
-      // Envoi de la réponse contenant les données de l'utilisateur
-      res.json(dataMessage);
-    }
-    catch(err){
-      console.log(err.message);
-      res.status(400);
-      res.send(err.message)
-    }
-    finally{
-      await client.close();
-    }
-  });
+  //     // Envoi de la réponse contenant les données de l'utilisateur
+  //     res.json(dataMessage);
+  //   }
+  //   catch(err){
+  //     console.log(err.message);
+  //     res.status(400);
+  //     res.send(err.message)
+  //   }
+  //   finally{
+  //     await client.close();
+  //   }
+  // });
   
   
   //Ajouter un user sur la liste d'attente des demandes d'admin
@@ -249,11 +251,12 @@ app.post("/MessagesList", async(req, res) => {
       // Connexion à la base de données
       await client2.connect();
       console.log("connected to database");
-      console.log("le req : ", req.body.user.username);
+      console.log("le req : ", req.body.username);
   
       // Vérifier que l'user n'est pas dans inscrit dans la liste de demande d'admin
       const listUsers = client2.db("ForumBDD").collection("users");
-      const dataUsers = await listUsers.updateOne({username: req.body.user.username}, {$set: {adminRequest: "true"}});
+      console.log("here")
+      const dataUsers = await listUsers.updateOne({username: req.body.username}, {$set: {adminRequest: "true"}});
       res.send("ok");
 
     }
@@ -317,28 +320,19 @@ app.post("/MessagesList", async(req, res) => {
     }
   });
 
-  //Ajouter un user comme admin ou non
-  app.post("/SetAdminRequest", async(req, res) => {
-    console.log("j'ai reçu une requete sur /SetAdminRequest");
-    const client2 = new MongoClient(uri);
-
+  app.get("/getNewRegistrations", async(req, res) => {
+    console.log("j'ai reçu une requete sur /getNewRegistrations");
     try{
       // Connexion à la base de données
-      await client2.connect();
-      console.log("connected to database");
-      console.log("le req : ", req.body.st);
-  
+      await client.connect();
       
-      const listUsers = client2.db("ForumBDD").collection("users");
-      // Si state = true alors l'user devient admin
-      if (req.body.st){
-        const dataUsers = await listUsers.updateOne({username: req.body.us.username}, {$set: {privilege: "admin"}});
-        console.log("user ajouté aux admins")
-      }
-      else{
-        console.log("utilisateur refusé")
-      }
-      const dataUsers = await listUsers.updateOne({username: req.body.us.username}, {$set: {adminRequest: "false"}});
+      // Opérations sur la collection "users"
+      const requests = client.db("ForumBDD").collection("users");
+      const dataRequests = await requests.find({privilege:"awaiting"}).toArray();
+      console.log(dataRequests);
+  
+      // Envoi de la réponse contenant les données de l'utilisateur
+      res.json(dataRequests);
     }
     catch(err){
       console.log(err.message);
@@ -346,9 +340,77 @@ app.post("/MessagesList", async(req, res) => {
       res.send(err.message)
     }
     finally{
-      await client2.close();
+      await client.close();
     }
   });
+
+  // modifier ou non le privilege comme admin 
+  app.post("/SetAdmin", async(req, res) => {
+    console.log("j'ai reçu une requete sur /SetAdmin");
+    const client2 = new MongoClient(uri);
+    console.log(req.body)
+      try{
+        // Connexion à la base de données
+        await client2.connect();
+        console.log("connected to database");
+        console.log("le req : ", req.body.st);
+        
+        const listUsers = client2.db("ForumBDD").collection("users");
+        
+        // Si state = true alors l'user devient admin
+        if (req.body.st=="true"){
+          const dataUsers = await listUsers.updateOne({username: req.body.us.username}, {$set: {privilege: "admin"}});
+          console.log("user ajouté aux admins")
+        }
+        else{
+          console.log("utilisateur refusé")
+        }
+        const dataUsers = await listUsers.updateOne({username: req.body.us.username}, {$set: {adminRequest: "false"}});
+        res.send(`user ajouté aux admins:${req.body.st}`);
+      }
+      catch(err){
+        console.log(err.message);
+        res.status(400);
+        res.send(err.message)
+      }
+      finally{
+        await client2.close();
+      } 
+    });
+   
+  // modifier ou non le privilege comme user
+  app.post("/SetMember", async(req, res) => {
+    console.log("j'ai reçu une requete sur /SetMember");
+    const client2 = new MongoClient(uri);
+    console.log(req.body)
+      try{
+        // Connexion à la base de données
+        await client2.connect();
+        console.log("connected to database");
+        console.log("le req : ", req.body.st);
+        
+        const listUsers = client2.db("ForumBDD").collection("users");
+        
+        // Si state = true alors l'awaiting devient user
+        if (req.body.st=="true"){
+          const dataUsers = await listUsers.updateOne({username: req.body.us.username}, {$set: {privilege: "user"}});
+          console.log("inscription validée")
+        }
+        else{
+          console.log("inscription refusée")
+          const dataUsers = await listUsers.deleteOne({username: req.body.us.username});
+        }
+        res.send(`inscription validée:${req.body.st}`);
+      }
+      catch(err){
+        console.log(err.message);
+        res.status(400);
+        res.send(err.message)
+      }
+      finally{
+        await client2.close();
+      } 
+    });
 
   //Supprimer un compte
   app.post("/DeleteAccount", async(req, res) => {
@@ -376,5 +438,82 @@ app.post("/MessagesList", async(req, res) => {
     }
   });
 
+   // remove admin privilege
+   app.post("/RemoveAdmin", async(req, res) => {
+    console.log("j'ai reçu une requete sur /RemoveAdmin");
+    const client2 = new MongoClient(uri);
+    console.log(req.body)
+      try{
+        // Connexion à la base de données
+        await client2.connect();
+        console.log("connected to database");
+        console.log("le req : ", req.body);
+        
+        const listUsers = client2.db("ForumBDD").collection("users");
+        const dataUsers = await listUsers.updateOne({username: req.body.username}, {$set: {privilege: "user"}});
+        console.log("the user is no longer an admin")
+        
+      }
+      catch(err){
+        console.log(err.message);
+        res.status(400);
+        res.send(err.message)
+      }
+      finally{
+        await client2.close();
+      } 
+    });
+
+    //Supprimer un message
+    app.post("/DeleteMessage", async(req, res) => {
+    console.log("j'ai reçu une requete sur /DeleteMessage");
+    const client2 = new MongoClient(uri);
+
+    try{
+      // Connexion à la base de données
+      await client2.connect();
+      console.log("connected to database");
+      console.log("le req : ", req.body.content);
+
+      const listUsers = client2.db("ForumBDD").collection("Messages");
+      const dataUsers = await listUsers.deleteOne({content:req.body.content});
+      console.log("Message supprimé")
+      
+    }
+    catch(err){
+      console.log(err.message);
+      res.status(400);
+      res.send(err.message)
+    }
+    finally{
+      await client2.close();
+    }
+  });
+
+  //Supprimer un topic
+  app.post("/DeleteTopic", async(req, res) => {
+    console.log("j'ai reçu une requete sur /DeleteTopic");
+    const client2 = new MongoClient(uri);
+
+    try{
+      // Connexion à la base de données
+      await client2.connect();
+      console.log("connected to database");
+      console.log("le req : ", req.body.text);
+
+      const listUsers = client2.db("ForumBDD").collection("Topics");
+      const dataUsers = await listUsers.deleteOne({text:req.body.text});
+      console.log("Topic supprimé")
+      
+    }
+    catch(err){
+      console.log(err.message);
+      res.status(400);
+      res.send(err.message)
+    }
+    finally{
+      await client2.close();
+    }
+  });
 
 app.listen(port, () => {console.log(`launching the serveur on port ${port}`)})
