@@ -18,6 +18,7 @@ app.use(express.json());
 
 app.post("/login",async(req,res)=>{
     try{
+        const client = new MongoClient(uri);
         await client.connect();
         console.log("connected to database");
 
@@ -53,6 +54,7 @@ app.post("/login",async(req,res)=>{
 
 app.post("/Register", async(req,res)=>{
     try{
+        const client = new MongoClient(uri);
         await client.connect();
 
         const usersBDD = client.db("ForumBDD").collection("users");
@@ -90,6 +92,7 @@ app.post("/Register", async(req,res)=>{
 app.post("/Forum", async(req,res) => {
     
     try{
+        const client = new MongoClient(uri);
         await client.connect();
         const topics = client.db("ForumBDD").collection("Topics");
 
@@ -147,6 +150,7 @@ app.post("/Topic", async(req,res) => {
 app.post("/CreateTopic", async(req,res) =>{
   try{
     // console.log("recive");
+    const client = new MongoClient(uri);
     await client.connect();
     const topics = client.db("ForumBDD").collection("Topics");
     await topics.insertOne(req.body);
@@ -168,6 +172,7 @@ app.post("/CreateTopic", async(req,res) =>{
 app.post("/CreateMessage", async(req,res) =>{
   try{
     // console.log("recive");
+    const client = new MongoClient(uri);
     await client.connect();
     const topics = client.db("ForumBDD").collection("Messages");
     await topics.insertOne(req.body);
@@ -274,6 +279,7 @@ app.post("/MessagesList", async(req, res) => {
     console.log("j'ai reçu une requete sur /User");
     try{
       // Connexion à la base de données
+      const client = new MongoClient(uri);
       await client.connect();
       console.log("Voila le contenu de ma demande user", req.body);
       
@@ -300,6 +306,7 @@ app.post("/MessagesList", async(req, res) => {
     console.log("j'ai reçu une requete sur /getAdminRequests");
     try{
       // Connexion à la base de données
+      const client = new MongoClient(uri);
       await client.connect();
       
       // Opérations sur la collection "users"
@@ -324,6 +331,7 @@ app.post("/MessagesList", async(req, res) => {
     console.log("j'ai reçu une requete sur /getNewRegistrations");
     try{
       // Connexion à la base de données
+      const client = new MongoClient(uri);
       await client.connect();
       
       // Opérations sur la collection "users"
@@ -358,7 +366,7 @@ app.post("/MessagesList", async(req, res) => {
         const listUsers = client2.db("ForumBDD").collection("users");
         
         // Si state = true alors l'user devient admin
-        if (req.body.st=="true"){
+        if (req.body.st==true){
           const dataUsers = await listUsers.updateOne({username: req.body.us.username}, {$set: {privilege: "admin"}});
           console.log("user ajouté aux admins")
         }
@@ -392,7 +400,7 @@ app.post("/MessagesList", async(req, res) => {
         const listUsers = client2.db("ForumBDD").collection("users");
         
         // Si state = true alors l'awaiting devient user
-        if (req.body.st=="true"){
+        if (req.body.st==true){
           const dataUsers = await listUsers.updateOne({username: req.body.us.username}, {$set: {privilege: "user"}});
           console.log("inscription validée")
         }
@@ -426,7 +434,7 @@ app.post("/MessagesList", async(req, res) => {
       const listUsers = client2.db("ForumBDD").collection("users");
       const dataUsers = await listUsers.deleteOne({username: req.body.username});
       console.log("utilisateur supprimé")
-      
+      res.send(`Account Deleted`);
     }
     catch(err){
       console.log(err.message);
@@ -452,7 +460,7 @@ app.post("/MessagesList", async(req, res) => {
         const listUsers = client2.db("ForumBDD").collection("users");
         const dataUsers = await listUsers.updateOne({username: req.body.username}, {$set: {privilege: "user"}});
         console.log("the user is no longer an admin")
-        
+        res.send(`admin privilege removed`);
       }
       catch(err){
         console.log(err.message);
@@ -478,7 +486,7 @@ app.post("/MessagesList", async(req, res) => {
       const listUsers = client2.db("ForumBDD").collection("Messages");
       const dataUsers = await listUsers.deleteOne({content:req.body.content});
       console.log("Message supprimé")
-      
+      res.send(`Message supprimé`);
     }
     catch(err){
       console.log(err.message);
@@ -504,7 +512,7 @@ app.post("/MessagesList", async(req, res) => {
       const listUsers = client2.db("ForumBDD").collection("Topics");
       const dataUsers = await listUsers.deleteOne({text:req.body.text});
       console.log("Topic supprimé")
-      
+      res.send(`Topic supprimé`);
     }
     catch(err){
       console.log(err.message);

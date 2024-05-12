@@ -1,15 +1,15 @@
 import {useEffect, useState, ObjectID} from "react"
 import axios from "axios"
-import GetAdminRequests from "./GetAdminRequests.jsx";
-import MessagesList from "./MessagesList.jsx";
-import SetAdmin from "./SetAdmin.jsx";
-import SetMember from "./SetMember.jsx";
+// import GetAdminRequests from "./GetAdminRequests.jsx";
+// import MessagesList from "./MessagesList.jsx";
+// import SetAdmin from "./SetAdmin.jsx";
+// import SetMember from "./SetMember.jsx";
 import RemoveAdminPrivilege from "./RemoveAdminPrivilege.jsx";
 
 
 
 
-function ShowProfile({curr}) {
+function ShowProfile({curr,changePage}) {
     //cas n°1 : les données de l'user sont passées dans les props
     //cas n°2 : seulement l'username' de l'user est donné
     
@@ -46,21 +46,49 @@ function ShowProfile({curr}) {
         // console.log("curr =", curr);
         retrieveUser();
     }, []);
+
+    const actualise = () => {
+        console.log("actualise");
+        changePage(prev => ({...prev, "num":8 }));
+    }
+
+    const SetMember = async (data) => {
+        try {
+            //modifier le champ adminRequest à false dans users
+            //changer le privilege de l'user ou non
+            console.log(data.user);
+            const res = await axios.post("/SetMember", data);
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+
+    const SetAdmin = async (data) => {
+        try {
+            //modifier le champ adminRequest à false dans users
+            //changer le privilege de l'user ou non
+            console.log(data.user);
+            const res = await axios.post("/SetAdmin", data);
+        } catch (err) {
+            console.error(err.message);
+        }
+    }
+    
     
     return (
         <div>
             {/*accepter ou non une demande de membre (inscription)*/}
             {curr.user.privilege ==="admin" && userData.adminRequest=="true" &&(
                 <div> 
-                    <button onClick={() =>  SetAdmin(userData, true)}>accept</button>
-                    <button onClick={() => SetAdmin(userData, false)}>refuse</button>
+                    <button onClick={() =>  {SetAdmin({"us":userData, "st":true}); actualise()}}>accept</button>
+                    <button onClick={() => {SetAdmin({"us":userData, "st":false}); actualise()}}>refuse</button>
                 </div>
             )}
             {/*accepter ou non une demande d'admin*/}
             {curr.user.privilege ==="admin" && userData.privilege=="awaiting" &&(
                 <div> 
-                    <button onClick={() =>  SetMember(userData, true)}>accept</button>
-                    <button onClick={() => SetMember(userData, false)}>refuse</button>
+                    <button onClick={() =>  {SetMember({"us":userData, "st":true}); actualise()}}>accept</button>
+                    <button onClick={() => {SetMember({"us":userData, "st":false}); actualise()}}>refuse</button>
                 </div>
             )}
 

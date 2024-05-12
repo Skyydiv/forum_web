@@ -1,6 +1,5 @@
 import axios from "axios";
 import {useEffect,useState} from "react";
-import DeleteTopic from "./DeleteTopic";
 
 function Topic({topic_id, changePage, userLogged}){
     const [topic, setTopic] = useState();
@@ -19,6 +18,16 @@ function Topic({topic_id, changePage, userLogged}){
             console.error(e);
         })
     }
+
+    let DeleteTopic = async (Topic) => {
+        try {
+            console.log(Topic);
+            const res = await axios.post("/DeleteTopic", Topic);
+            changePage(prev => ({...prev, "num":2 }));
+        } catch (err) {
+            console.error(err.message);
+        }
+    };
 
     useEffect( () => {
         retrieveTopic();

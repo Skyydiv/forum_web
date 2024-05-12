@@ -84,7 +84,7 @@ function PageHandler(){
             return (
                 <div>
                 <NavBarre curr={curr} changePage={setCurr}/>
-                <ShowProfile curr={curr}/>
+                <ShowProfile curr={curr} changePage={setCurr}/>
                 <MessagesList changePage={setCurr} criteria={{"author":curr.user_visit}} userLogged={curr.user}/>
             </div> 
             )
