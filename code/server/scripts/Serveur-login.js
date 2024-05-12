@@ -128,7 +128,7 @@ app.post("/Topic", async(req,res) => {
         await client2.connect();
         const topics = client2.db("ForumBDD").collection("Topics");
 
-        console.log(req.body,req.body.id);
+        console.log("topic",req.body,req.body.id);
         const id = ObjectId.createFromHexString(req.body.id);
         const projection = {"_id": 0};
         const data = await topics.find({"_id": id}).project(projection).next(); 
@@ -521,6 +521,87 @@ app.post("/MessagesList", async(req, res) => {
     }
     finally{
       await client2.close();
+    }
+  });
+
+  app.post("/getUsers", async(req, res) => {
+    console.log("j'ai reçu une requete sur /getUsers");
+    const client3 = new MongoClient(uri);
+    try{
+      // Connexion à la base de données
+      await client3.connect();
+      console.log("Voila le contenu de ma demande getuser", req.body.research);
+      
+      // Opérations sur la collection "users"
+      
+      const users = client3.db("ForumBDD").collection("users");
+      const dataUser = await users.find({"username":{$regex : req.body.research, $options : "i"}}).toArray();
+      console.log("dans /getUsers : data user:", dataUser);
+  
+      // Envoi de la réponse contenant les données de l'utilisateur
+      res.json(dataUser);
+    }
+    catch(err){
+      console.log(err.message);
+      res.status(400);
+      res.send(err.message)
+    }
+    finally{
+      await client3.close();
+    }
+  });
+
+  app.post("/getMessages", async(req, res) => {
+    console.log("j'ai reçu une requete sur /getMessages");
+    const client3 = new MongoClient(uri);
+    try{
+      // Connexion à la base de données
+      await client3.connect();
+      console.log("Voila le contenu de ma demande getMessages", req.body);
+      
+      // Opérations sur la collection "Messages"
+      
+      const mess = client3.db("ForumBDD").collection("Messages");
+      const dataMessages = await mess.find({"content":{$regex : req.body.research, $options : "i"}}).toArray();
+      console.log("dans /getMessages : data messages:", dataMessages);
+  
+      // Envoi de la réponse contenant les données de l'utilisateur
+      res.json(dataMessages);
+    }
+    catch(err){
+      console.log(err.message);
+      res.status(400);
+      res.send(err.message)
+    }
+    finally{
+      await client3.close();
+    }
+  });
+
+  app.post("/getTopics", async(req, res) => {
+    console.log("j'ai reçu une requete sur /getTopics");
+    const client3 = new MongoClient(uri);
+    try{
+      // Connexion à la base de données
+      await client3.connect();
+      console.log("Voila le contenu de ma demande getTopics", req.body);
+      
+      // Opérations sur la collection "Topics"
+      
+      const top = client3.db("ForumBDD").collection("Topics");
+      const dataTopics = await top.find({"subject":{$regex : req.body.research, $options : "i"}}).toArray();
+      console.log("dans /getTopics : data topics:", dataTopics);
+  
+      // Envoi de la réponse contenant les données de l'utilisateur
+      res.json(dataTopics);
+    }
+    catch(err){
+      console.log(err.message);
+      res.status(400);
+      res.send(err.message)
+    }
+    finally{
+      await client3.close();
     }
   });
 

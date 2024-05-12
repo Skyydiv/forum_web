@@ -11,6 +11,7 @@ import CreateMessage from "./CreateMessage";
 import GetAdminRequests from "./GetAdminRequests";
 import ShowProfile from "./ShowProfile";
 import ManageUsers from "./ManageUsers";
+import ShowResultsResearch from "./ShowResultsResearch";
 
 function PageHandler(){
     const [curr, setCurr] = useState({
@@ -95,6 +96,16 @@ function PageHandler(){
                 <ManageUsers changePage={setCurr} curr={curr}/>
             </div> 
             )
+
+        //Afficher les résultats d'une recherche
+        case 9 :
+            return (
+                <div>
+                    <NavBarre curr={curr} changePage={setCurr}/>
+                    <ShowResultsResearch changePage = {setCurr} content = {curr.content} user = {curr.user}/>
+                </div>
+            )
+
         default:
             // return <Message id_message="66347748dd933a57a0fa8306"/>
            return <Login changePage={setCurr}/>
