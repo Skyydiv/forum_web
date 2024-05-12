@@ -8,7 +8,6 @@ function Topic({topic_id, changePage, userLogged}){
     let url = "http://localhost:8000"
 
     let retrieveTopic = () =>{
-        
         axios.post(`${url}/Topic`, topic_id)
         .then( (rep)=> {
             console.log(rep.data);

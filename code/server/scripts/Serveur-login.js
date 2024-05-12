@@ -219,32 +219,6 @@ app.post("/MessagesList", async(req, res) => {
     }
   });
 
-//Récupérer les informations d'un message sur la bdd et les transmettre
-  // app.post("/Message", async(req, res) => {
-  //   console.log("j'ai reçu une requete sur /Message");
-  //   try{
-  //     // Connexion à la base de données
-  //     await client.connect();
-  //     console.log("connected to database\n body: ",req.body);
-  
-  //     // Opérations sur la collection "messages"
-  //     const messages = client.db("ForumBDD").collection("Messages");
-      
-  //     const dataMessage = await messages.find(req.body).next();
-  //     console.log("data message:", dataMessage);
-  
-  //     // Envoi de la réponse contenant les données de l'utilisateur
-  //     res.json(dataMessage);
-  //   }
-  //   catch(err){
-  //     console.log(err.message);
-  //     res.status(400);
-  //     res.send(err.message)
-  //   }
-  //   finally{
-  //     await client.close();
-  //   }
-  // });
   
   
   //Ajouter un user sur la liste d'attente des demandes d'admin

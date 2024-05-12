@@ -35,7 +35,7 @@ function MessagesList ({criteria, changePage, userLogged}){
         try {
             console.log(Message);
             const res = await axios.post("/DeleteMessage", Message);
-            changePage(prev => ({...prev, "num":3 }));
+            changePage(prev => ({...prev, "num":4 }));
         } catch (err) {
             console.error(err.message);
         }
