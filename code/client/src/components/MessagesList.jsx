@@ -2,7 +2,7 @@ import {useEffect, useState} from "react"
 import axios from "axios"
 import Message from "./Message";
 
-function MessagesList ({criteria, changePage, userLogged}){
+function MessagesList ({criteria, changePage, userLogged,page}){
     
     const [error, setError] = useState({
         value: false,
@@ -35,7 +35,7 @@ function MessagesList ({criteria, changePage, userLogged}){
         try {
             console.log(Message);
             const res = await axios.post("/DeleteMessage", Message);
-            changePage(prev => ({...prev, "num":4 }));
+            changePage(prev => ({...prev, "num":page }));
         } catch (err) {
             console.error(err.message);
         }

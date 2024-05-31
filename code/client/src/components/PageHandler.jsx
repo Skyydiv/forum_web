@@ -46,7 +46,7 @@ function PageHandler(){
                 <div>
                     <NavBarre curr={curr} changePage={setCurr}/>
                     <Topic topic_id={curr.topic} changePage={setCurr} userLogged={curr.user}/>
-                    <MessagesList changePage={setCurr} criteria={{"id_topic":curr.topic.id}} userLogged={curr.user}/>
+                    <MessagesList changePage={setCurr} criteria={{"id_topic":curr.topic.id}} userLogged={curr.user} page={3} />
                     
                 </div>
             )
@@ -58,7 +58,7 @@ function PageHandler(){
                     
                     <NavBarre curr={curr} changePage={setCurr}/>
                     <Profile02 user={curr.user} changePage={setCurr} curr={curr}/>
-                    <MessagesList changePage={setCurr} criteria={{"author":curr.user.username}} userLogged={curr.user}/>
+                    <MessagesList changePage={setCurr} criteria={{"author":curr.user.username}} userLogged={curr.user} page={4}/>
                 </div>
             )
         
