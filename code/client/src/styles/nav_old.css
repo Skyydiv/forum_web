@@ -1,0 +1,46 @@
+.nav{
+    background-color:#333;
+    display:flex;
+    justify-content:space-between;
+    flex-direction: row;
+    margin:0 20%;
+}
+
+.nav ul{
+    padding:0 ;
+    margin:0px 10px;
+
+    list-style: none;
+    display:flex;
+    justify-content: space-between;
+    gap:auto;
+    flex-grow:1;
+    align-items:flex-end;
+}
+
+
+.buttonS {
+    font-size:20px;
+    padding:0;
+    border: none;
+
+    color:white;
+    background-color: transparent; 
+    
+    
+    outline-color: white;
+}
+
+.buttonS:hover{
+    background-color:#6c6a6a;
+}
+
+/* input{
+    padding:0px;
+    margin:0px;
+}
+
+li{
+    padding:0px;
+    margin:0px; 
+} */

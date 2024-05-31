@@ -25,9 +25,12 @@ function Register({changePage}){
             axios.post(`${url}/Register`,infos)
             .then((response) =>{
                 console.log("succes subscription");
+                changePage((prev) => ({...prev, num:0}));
+                alert("Demand sent, please wait an admin validation");
             })
             .catch(err =>{
                 console.error("error inscription", err);
+                alert("Error, try again");
             })
         }
         

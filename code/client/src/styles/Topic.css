@@ -1,0 +1,83 @@
+/* Topic.css */
+
+.topic-container {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.topic-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.topic-header h1 {
+    margin: 0;
+    font-size: 24px;
+}
+
+.topic-header button {
+    background-color: #ff4d4d;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.topic-header button:hover {
+    background-color: #ff1a1a;
+}
+
+.topic-content {
+    margin-top: 20px;
+}
+
+.topic-content p {
+    margin: 10px 0;
+}
+
+.delete-confirmation {
+    margin-top: 20px;
+    background-color: #ffcccc;
+    padding: 15px;
+    border-radius: 5px;
+}
+
+.delete-confirmation label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.delete-confirmation button {
+    background-color: #ff4d4d;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.delete-confirmation button:hover {
+    background-color: #ff1a1a;
+}
+
+.new-message-button {
+    margin-top: 20px;
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.new-message-button:hover {
+    background-color: #45a049;
+}

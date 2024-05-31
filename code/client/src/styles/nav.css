@@ -1,46 +1,70 @@
-.nav{
-    background-color:#333;
-    display:flex;
-    justify-content:space-between;
-    flex-direction: row;
-    margin:0 20%;
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
 }
 
-.nav ul{
-    padding:0 ;
-    margin:0px 10px;
+/* Navigation Bar Styles */
+.nav {
+    background-color: #007bff;
+    padding: 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
 
+.nav ul {
     list-style: none;
-    display:flex;
+    display: flex;
     justify-content: space-between;
-    gap:auto;
-    flex-grow:1;
-    align-items:flex-end;
+    align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
-
-.buttonS {
-    font-size:20px;
-    padding:0;
-    border: none;
-
-    color:white;
-    background-color: transparent; 
-    
-    
-    outline-color: white;
+.nav li {
+    margin: 0 10px;
 }
 
-.buttonS:hover{
-    background-color:#6c6a6a;
+.nav input[type="button"], .nav button {
+    background-color: #fff;
+    color: #007bff;
+    border: 2px solid #007bff;
+    border-radius: 4px;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-/* input{
-    padding:0px;
-    margin:0px;
+.nav input[type="button"]:hover, .nav button:hover {
+    background-color: #0056b3;
+    color: #fff;
 }
 
-li{
-    padding:0px;
-    margin:0px; 
-} */
+.nav input[type="button"]:focus, .nav button:focus {
+    outline: none;
+}
+
+.nav input[placeholder="Research a topic"] {
+    padding: 8px 12px;
+    border-radius: 4px;
+    border: 2px solid #007bff;
+    margin-right: 10px;
+}
+
+.nav input[placeholder="Research a topic"]:focus {
+    outline: none;
+    border-color: #0056b3;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .nav li {
+        margin: 5px 0;
+    }
+}

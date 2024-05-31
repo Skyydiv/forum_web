@@ -1,71 +1,78 @@
-/* Styles for Login component */
-form {
-  margin-top: 20px;
+/* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
+/* Container for the login form */
+.login-container {
+    background-color: #fff;
+    padding: 2em;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 300px;
 }
 
-input[type="text"],
-input[type="password"],
-input[type="submit"],
-input[type="button"] {
-  margin-bottom: 10px;
+/* Form heading */
+.login-container h1 {
+    text-align: center;
+    margin-bottom: 1em;
 }
 
-/* Styles for Register component */
-
-#user,
-#mdp,
-#confirm {
-  margin-bottom: 10px;
-}
-
-/* Styles for Profile component */
-button[type="button"],
-button {
-  margin-bottom: 10px;
-}
-
-/* Styles for Forum component */
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-ul li {
-  margin-bottom: 5px;
-}
-
-/* Styles for Topic component */
-/* Ajoutez des styles supplémentaires au besoin */
-/* Styles for Navigation Bar */
-.nav {
-  background-color: #333;
-  padding: 10px;
-}
-
-.nav ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
-}
-
-.nav li {
-  display: inline;
-  margin-right: 10px;
-}
-
-.nav input[type="text"] {
-  margin-right: 5px;
-}
-
-/* Responsive styles */
-@media screen and (max-width: 600px) {
-  .nav li {
+/* Form labels */
+.login-container label {
     display: block;
-    margin-bottom: 5px;
-  }
+    margin-bottom: 0.5em;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Form inputs */
+.login-container input[type="text"],
+.login-container input[type="password"] {
+    width: 100%;
+    padding: 0.5em;
+    margin-bottom: 1em;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+/* Submit button */
+.login-container input[type="submit"],
+.login-container input[type="button"] {
+    width: 100%;
+    padding: 0.75em;
+    margin-top: 0.5em;
+    border: none;
+    border-radius: 4px;
+    color: #fff;
+    background-color: #007bff;
+    cursor: pointer;
+}
+
+.login-container input[type="button"] {
+    background-color: #28a745;
+}
+
+.login-container input[type="submit"]:hover,
+.login-container input[type="button"]:hover {
+    background-color: #0056b3;
+}
+
+.login-container input[type="button"]:hover {
+    background-color: #218838;
+}
+
+/* Error message */
+.login-container .error {
+    color: red;
+    font-weight: bold;
+    margin-top: 1em;
+    text-align: center;
 }

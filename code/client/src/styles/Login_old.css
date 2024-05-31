@@ -1,0 +1,71 @@
+/* Styles for Login component
+form {
+  margin-top: 20px;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="submit"],
+input[type="button"] {
+  margin-bottom: 10px;
+}
+
+/* Styles for Register component */
+
+#user,
+#mdp,
+#confirm {
+  margin-bottom: 10px;
+}
+
+/* Styles for Profile component */
+button[type="button"],
+button {
+  margin-bottom: 10px;
+}
+
+/* Styles for Forum component */
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+ul li {
+  margin-bottom: 5px;
+}
+
+/* Styles for Topic component */
+/* Ajoutez des styles supplémentaires au besoin */
+/* Styles for Navigation Bar */
+.nav {
+  background-color: #333;
+  padding: 10px;
+}
+
+.nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nav li {
+  display: inline;
+  margin-right: 10px;
+}
+
+.nav input[type="text"] {
+  margin-right: 5px;
+}
+
+/* Responsive styles */
+@media screen and (max-width: 600px) {
+  .nav li {
+    display: block;
+    margin-bottom: 5px;
+  }
+} */

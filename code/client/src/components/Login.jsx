@@ -54,7 +54,7 @@ function Login({changePage}) {
     // Connection code
     else{
         return(
-            <div>
+            <div className="login-container">
                 {/* <Forum/> */}
                 <h1>Login</h1>
                 <form onSubmit={handleSubmit}>

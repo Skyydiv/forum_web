@@ -1,3 +1,41 @@
-/* .Message{
+/* Message.css */
 
-} */
+.message-container {
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    max-width: 800px;
+    margin: 20px auto;
+}
+
+.message-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.message-header a {
+    text-decoration: none;
+    color: #007bff;
+    font-weight: bold;
+}
+
+.message-header a:hover {
+    text-decoration: underline;
+}
+
+.message-content {
+    margin-top: 10px;
+}
+
+.message-content p {
+    margin: 10px 0;
+    font-size: 16px;
+}
+
+.message-error {
+    color: red;
+    margin-top: 20px;
+}

@@ -1,9 +1,8 @@
-import {useEffect, useState} from "react"
-import axios from "axios"
-import "../styles/Message.css"
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "../styles/Message.css";
 
-function Message ({infos, changePage}){
-    
+function Message({ infos, changePage }) {
     const [error, setError] = useState({
         value: false,
         message: ""
@@ -17,35 +16,32 @@ function Message ({infos, changePage}){
         // console.log(infos.infos.content);
     }, [infos]);
 
-    
-
-    let bool = true;
-
     axios.defaults.baseURL = "http://localhost:8000";
 
     let goUserProfile = (e) => {
         e.preventDefault();
         console.log("go to user selected", infos);
-        changePage(prev => ({...prev, "num":7, "user_visit":infos.author}));
-        
-    }   
+        changePage(prev => ({ ...prev, num: 7, user_visit: infos.author }));
+    };
 
-    return(
-        <div className="Message">
-            {/* <p>oui</p> */}
+    return (
+        <div className="message-container">
             {messageData.content ? (
                 <div>
-                    {/* <h1>Message </h1> */}
-                    <a href='' onClick={goUserProfile}>author : {messageData.author}</a>
-                    <p>date : {messageData.date}</p>
-                    <p> {messageData.content}</p>
+                    <div className="message-header">
+                        <a href='' onClick={goUserProfile}>Author: {messageData.author}</a>
+                        <p>Date: {messageData.date}</p>
+                    </div>
+                    <div className="message-content">
+                        <p>{messageData.content}</p>
+                    </div>
                 </div>
             ) : (
-                <p>Chargement des données...</p>
+                <p>Loading data...</p>
             )}
-            {error.value && typeof error.message === 'string' && <p>{error.message}</p>}
+            {error.value && typeof error.message === 'string' && <p className="message-error">{error.message}</p>}
         </div>
-    )
+    );
 }
 
 export default Message;
