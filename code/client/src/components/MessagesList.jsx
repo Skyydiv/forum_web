@@ -10,6 +10,7 @@ function MessagesList ({criteria, changePage, userLogged,page}){
     });
 
     const [messagesList, setMessagesList] = useState([]);
+    const [del, setDel] = useState(false);
     axios.defaults.baseURL = "http://localhost:8000";
 
     useEffect(() => {
@@ -49,8 +50,18 @@ function MessagesList ({criteria, changePage, userLogged,page}){
             {messagesList.map(message => (
                 <div>
                     <Message infos={message} changePage={changePage}/>
-                    {(userLogged.privilege === "admin" || userLogged.username === message.author) && (
-                        <button onClick={() => DeleteMessage(message) }>delete message</button>)}
+                    {(userLogged.privilege === "admin" || userLogged.username === message.author) && !del && 
+                        (<button onClick={() => setDel(true)}>delete message</button>)}
+
+                   {del && (
+                        <> 
+                            <div role="group" aria-labelledby="sharedL">
+                                <label id="sharedL">Are you sure</label>
+                                <button onClick={() => DeleteMessage(message)}>yes</button>
+                                <button onClick={() => setDel(false)}>no</button>
+                            </div>
+                        </>
+                    )}
                     
                 </div>
             ))}

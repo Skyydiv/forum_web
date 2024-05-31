@@ -3,7 +3,7 @@ import {useEffect,useState} from "react";
 
 function Topic({topic_id, changePage, userLogged}){
     const [topic, setTopic] = useState();
-
+    const [del,setDel] = useState(false);
 
     let url = "http://localhost:8000"
 
@@ -37,9 +37,19 @@ function Topic({topic_id, changePage, userLogged}){
         return(
             
             <div>
-                {(userLogged.privilege === "admin" || userLogged.username === topic.author) && (
-                        <button onClick={() => DeleteTopic(topic)}>delete topic </button>)
+                {(userLogged.privilege === "admin" || userLogged.username === topic.author) && !del && (
+                        <button onClick={() => setDel(true)}>delete topic </button>)
                 }
+
+                {del && (
+                        <> 
+                            <div role="group" aria-labelledby="sharedL">
+                                <label id="sharedL">Are you sure</label>
+                                <button onClick={() => DeleteTopic(topic)}>yes</button>
+                                <button onClick={() => setDel(false)}>no</button>
+                            </div>
+                        </>
+                    )}
 
                 <h1>{topic.subject} </h1>
                 <p>{topic.text}</p>
